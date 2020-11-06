@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RequestPayload>
+    <AppHdr xmlns="urn:iso:std:iso:20022:tech:xsd:head.001.001.01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <Fr>
+            <FIId>
+                <FinInstnId>
+                    <BICFI>TESTARZZXXX</BICFI>
+                </FinInstnId>
+            </FIId>
+        </Fr>
+        <To>
+            <FIId>
+                <FinInstnId>
+                    <BICFI>AAAAUSXXXXX</BICFI>
+                </FinInstnId>
+            </FIId>
+        </To>
+        <BizMsgIdr>DDDFFFF222</BizMsgIdr>
+        <MsgDefIdr>pacs.009.001.09</MsgDefIdr>
+        <CreDt>2020-11-06T11:11:01Z</CreDt>
+    </AppHdr>
+    <Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <FICdtTrf>
+            <GrpHdr>
+                <MsgId>27373HGDDT33</MsgId>
+                <CreDtTm>2020-11-06T11:28:28</CreDtTm>
+                <NbOfTxs>1</NbOfTxs>
+                <TtlIntrBkSttlmAmt Ccy="USD">12345.67</TtlIntrBkSttlmAmt>
+                <IntrBkSttlmDt>2017-04-06</IntrBkSttlmDt>
+                <SttlmInf>
+                    <SttlmMtd>INDA</SttlmMtd>
+                </SttlmInf>
+            </GrpHdr>
+            <CdtTrfTxInf>
+                <PmtId>
+                    <EndToEndId>END2ENDID1234</EndToEndId>
+                </PmtId>
+                <IntrBkSttlmAmt Ccy="USD">12345.67</IntrBkSttlmAmt>
+                <Dbtr>
+                    <FinInstnId>
+                        <BICFI>BBBBCAXXXXX</BICFI>
+                    </FinInstnId>
+                </Dbtr>
+                <Cdtr>
+                    <FinInstnId>
+                        <BICFI>CCCCESXXXXX</BICFI>
+                    </FinInstnId>
+                </Cdtr>
+            </CdtTrfTxInf>
+        </FICdtTrf>
+    </Document>
+</RequestPayload>
