@@ -22,7 +22,7 @@ import com.prowidesoftware.swift.utils.Lib;
 import java.io.IOException;
 
 /**
- * Parses a pacs.008 from a resource file
+ * Reads content from the message header, using the generic header implementation model
  *
  * <p>Running this will produce:<br>
  *
@@ -41,10 +41,13 @@ public class MxParseMessageWithHeader {
         MxPacs00800107 mx = MxPacs00800107.parse(Lib.readResource("pacs.008.001.07.xml"));
 
         // access message header data from the java model
-        // you can further cast this to a specific AppHdr implementation to read more data
         System.out.println("Header from: " + mx.getAppHdr().from());
         System.out.println("Header to: " + mx.getAppHdr().to());
         System.out.println("Header reference: " + mx.getAppHdr().reference());
+
+        // notice the from/to methods in the generic model will only return values when the header BIC option is
+        // present. For other structure options such as reading a ClrSysMmbId you can further cast this to a specific
+        // AppHdr implementation. The AppHdr is just an interface.
 
         // access message document data from the java model
         ActiveCurrencyAndAmount amount = mx.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmAmt();
