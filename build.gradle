@@ -7,7 +7,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.prowidesoftware:pw-iso20022:SRU2021-9.2.6'
+    implementation 'com.prowidesoftware:pw-iso20022:SRU2022-9.3.9'
 
     // for Java 9+ you might need to activate these modules or have this dependencies explicitly included
     implementation 'javax.xml.bind:jaxb-api:2.3.1'
