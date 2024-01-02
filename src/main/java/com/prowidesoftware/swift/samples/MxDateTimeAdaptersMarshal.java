@@ -15,7 +15,6 @@
  */
 package com.prowidesoftware.swift.samples;
 
-import com.prowidesoftware.swift.model.mx.MxPacs00800102;
 import com.prowidesoftware.swift.model.mx.MxPacs00800108;
 import com.prowidesoftware.swift.model.mx.dic.*;
 
@@ -23,6 +22,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.math.BigDecimal;
+import java.time.*;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -30,34 +30,43 @@ public class MxDateTimeAdaptersMarshal {
 
     public static void main(String[] args) throws DatatypeConfigurationException {
 
-        XMLGregorianCalendar utc = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2021, Calendar.OCTOBER, 19, 12, 13, 14));
+        GregorianCalendar cal = new GregorianCalendar(2021, Calendar.OCTOBER, 19, 12, 13, 14);
+        XMLGregorianCalendar utc = DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
         utc.setTimezone(0);
+
         MxPacs00800108 mx = sample(utc);
         System.out.println("\nDefault adapters for calendar in UTC with no fraction of seconds");
         System.out.println(mx.message());
 
-        XMLGregorianCalendar zoned = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2021, Calendar.OCTOBER, 19, 12, 13, 14));
+        XMLGregorianCalendar zoned = DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
         zoned.setTimezone(180);
+
         mx = sample(zoned);
         System.out.println("\nDefault adapters for zoned and no fraction of seconds");
         System.out.println(mx.message());
 
-        XMLGregorianCalendar fractions = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2021, Calendar.OCTOBER, 19, 12, 13, 14));
+        XMLGregorianCalendar fractions = DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
         fractions.setFractionalSecond(new BigDecimal("0.123"));
+
         mx = sample(fractions);
         System.out.println("\nDefault adapters for zoned and fraction of seconds");
         System.out.println(mx.message());
     }
 
-    private static MxPacs00800108 sample(final XMLGregorianCalendar cal) {
+    private static MxPacs00800108 sample(XMLGregorianCalendar utc) {
+        ZonedDateTime dateTime = utc.toGregorianCalendar().toZonedDateTime();
+        OffsetDateTime offsetDateTime = dateTime.toOffsetDateTime();
+        LocalDate localDate = dateTime.toLocalDate();
+        OffsetTime time = dateTime.toOffsetDateTime().toOffsetTime();
+
         final MxPacs00800108 mx = new MxPacs00800108();
         mx.setFIToFICstmrCdtTrf(new FIToFICustomerCreditTransferV08());
         mx.getFIToFICstmrCdtTrf().setGrpHdr(new GroupHeader93());
-        mx.getFIToFICstmrCdtTrf().getGrpHdr().setCreDtTm(cal);  // date time
-        mx.getFIToFICstmrCdtTrf().getGrpHdr().setIntrBkSttlmDt(cal);  //date
+        mx.getFIToFICstmrCdtTrf().getGrpHdr().setCreDtTm(offsetDateTime);  // date time
+        mx.getFIToFICstmrCdtTrf().getGrpHdr().setIntrBkSttlmDt(localDate);  //date
         mx.getFIToFICstmrCdtTrf().addCdtTrfTxInf(new CreditTransferTransaction39());
         mx.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).setSttlmTmReq(new SettlementTimeRequest2());
-        mx.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getSttlmTmReq().setCLSTm(cal); // time
+        mx.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getSttlmTmReq().setCLSTm(time); // time
         return mx;
     }
 

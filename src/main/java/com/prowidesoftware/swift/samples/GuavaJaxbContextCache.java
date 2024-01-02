@@ -19,8 +19,8 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.prowidesoftware.swift.model.mx.AbstractMX;
 import com.prowidesoftware.swift.model.mx.JaxbContextCache;
+import jakarta.xml.bind.JAXBContext;
 
-import javax.xml.bind.JAXBContext;
 import java.util.concurrent.ExecutionException;
 
 /**
